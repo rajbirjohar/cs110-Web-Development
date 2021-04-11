@@ -1,4 +1,4 @@
-# cs110
+# cs110 - Introduction to Web Development
 
 > Author: Rajbir Johar
 
