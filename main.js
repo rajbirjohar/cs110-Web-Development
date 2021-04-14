@@ -12,6 +12,16 @@ const oSymbol = "o";
 var xScore = 0;
 var oScore = 0;
 
+// var topLeft = cellDivs[0].classList[1];
+// var topMiddle = cellDivs[1].classList[1];
+// var topRight = cellDivs[2].classList[1];
+// var middleLeft = cellDivs[3].classList[1];
+// var middleMiddle = cellDivs[4].classList[1];
+// var middleRight = cellDivs[5].classList[1];
+// var bottomLeft = cellDivs[6].classList[1];
+// var bottomMiddle = cellDivs[7].classList[1];
+// var bottomRight = cellDivs[8].classList[1];
+
 // game variables
 let gameIsLive = true;
 let xIsNext = true;
@@ -33,6 +43,7 @@ const handleWin = (letter) => {
 };
 
 const gameState = () => {
+
   const topLeft = cellDivs[0].classList[1];
   const topMiddle = cellDivs[1].classList[1];
   const topRight = cellDivs[2].classList[1];
@@ -43,6 +54,7 @@ const gameState = () => {
   const bottomMiddle = cellDivs[7].classList[1];
   const bottomRight = cellDivs[8].classList[1];
 
+  console.log("I'm here");
   // check winner
   if (topLeft && topLeft === topMiddle && topLeft === topRight) {
     handleWin(topLeft);
@@ -110,12 +122,17 @@ const gameState = () => {
     gameIsLive = false;
     statusDiv.innerHTML = "Game is tied!";
   } else {
-    xIsNext = !xIsNext;
-    if (xIsNext) {
-      statusDiv.innerHTML = `${xSymbol} is next.`;
-    } else {
-      statusDiv.innerHTML = `<span>${oSymbol} is next.</span>`;
-    }
+
+    
+    //x
+    console.log("help");
+    statusDiv.innerHTML = `${xSymbol} is next.`;
+    
+    
+    
+    //o
+    compChoice(cellDivs);
+    
   }
 };
 
@@ -153,14 +170,22 @@ const handleCellClick = (e) => {
     return;
   }
 
-  if (xIsNext) {
-    classList.add("x");
-    gameState();
-  } else {
-    classList.add("o");
-    gameState();
-  }
+
+  classList.add("x");
+  gameState();
+
 };
+
+const compChoice = (e) => {
+  var comp = Math.floor(Math.random()*9);
+  console.log("compchoosing");
+  while(e[comp].classList[1] === "x" || e[comp].classList[1] === "o"){
+    console.log("regen");
+    comp = Math.floor(Math.random()*9);
+  }
+  e[comp].classList.add("o");
+
+}
 
 // event listeners
 restartDiv.addEventListener("click", handleRestart);
