@@ -12,16 +12,6 @@ const oSymbol = "o";
 var xScore = 0;
 var oScore = 0;
 
-// var topLeft = cellDivs[0].classList[1];
-// var topMiddle = cellDivs[1].classList[1];
-// var topRight = cellDivs[2].classList[1];
-// var middleLeft = cellDivs[3].classList[1];
-// var middleMiddle = cellDivs[4].classList[1];
-// var middleRight = cellDivs[5].classList[1];
-// var bottomLeft = cellDivs[6].classList[1];
-// var bottomMiddle = cellDivs[7].classList[1];
-// var bottomRight = cellDivs[8].classList[1];
-
 // game variables
 let gameIsLive = true;
 let xIsNext = true;
