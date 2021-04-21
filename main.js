@@ -23,7 +23,7 @@ const handleWin = (letter) => {
   gameIsLive = false;
   if (letter === "x") {
     xScore++;
-    statusDiv.innerHTML = `${letterToSymbol(letter)} has won!`;
+    statusDiv.innerHTML = `<span>${letterToSymbol(letter)} has won!<span>`;
     document.getElementById("xscore").innerHTML = `${xScore}`;
   } else {
     oScore++;
@@ -32,7 +32,7 @@ const handleWin = (letter) => {
   }
 };
 
-const gameState = () => {
+const checkWin = () => {
   const topLeft = cellDivs[0].classList[1];
   const topMiddle = cellDivs[1].classList[1];
   const topRight = cellDivs[2].classList[1];
@@ -96,27 +96,40 @@ const gameState = () => {
     cellDivs[2].classList.add("success");
     cellDivs[4].classList.add("success");
     cellDivs[6].classList.add("success");
-  } else if (
-    topLeft &&
-    topMiddle &&
-    topRight &&
-    middleLeft &&
-    middleMiddle &&
-    middleRight &&
-    bottomLeft &&
-    bottomMiddle &&
-    bottomRight
+  }
+}
+
+const checkTie = () => {
+  if (
+    cellDivs[0].classList[1] &&
+    cellDivs[1].classList[1] &&
+    cellDivs[2].classList[1] &&
+    cellDivs[3].classList[1] &&
+    cellDivs[4].classList[1] &&
+    cellDivs[5].classList[1] &&
+    cellDivs[6].classList[1] &&
+    cellDivs[7].classList[1] &&
+    cellDivs[8].classList[1]
   ) {
     gameIsLive = false;
     statusDiv.innerHTML = "Game is tied!";
-  } else {
-    xIsNext = !xIsNext;
-    if (xIsNext) {
-      statusDiv.innerHTML = `${xSymbol} is next.`;
-    } else {
-      statusDiv.innerHTML = `<span>${oSymbol} is next.</span>`;
-    }
   }
+}
+
+const gameState = () => {
+  // X move
+  if(gameIsLive){
+    statusDiv.innerHTML = `${xSymbol} is next.`;
+    checkWin();
+  }
+  checkTie();
+
+  // O move
+  if(gameIsLive) {
+    compChoice(cellDivs);
+    checkWin();
+  }
+  checkTie();
 };
 
 // event Handlers
@@ -152,15 +165,20 @@ const handleCellClick = (e) => {
   if (!gameIsLive || classList[1] === "x" || classList[1] === "o") {
     return;
   }
-
-  if (xIsNext) {
-    classList.add("x");
-    gameState();
-  } else {
-    classList.add("o");
-    gameState();
-  }
+  classList.add("x");
+  gameState();
 };
+
+const compChoice = (e) => {
+  var comp = Math.floor(Math.random()*9);
+  console.log("compchoosing");
+  while(e[comp].classList[1] === "x" || e[comp].classList[1] === "o"){
+    console.log("regen");
+    comp = Math.floor(Math.random()*9);
+  }
+  e[comp].classList.add("o");
+
+}
 
 // event listeners
 restartDiv.addEventListener("click", handleRestart);
