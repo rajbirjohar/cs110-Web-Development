@@ -9,7 +9,7 @@ const url =
 // fetch template
 fetch(url)
   .then((res) => res.json())
-    // do something with data
+  // do something with data
   .catch((err) => {
     // error catching
     console.log(err);
@@ -17,19 +17,21 @@ fetch(url)
 
 // button to fetch data
 document.getElementById("button1").addEventListener("click", loadJSON);
+// button to pause fetching
 
 function loadJSON() {
-  fetch(url)
-    // returns json response
-    // somehow already knows how to pull 10 tweets
-    .then(function (response) {
-      return response.json();
-    })
-    // returns data of the json
-    .then(function (data) {
-      let html = "";
-      data.statuses.forEach(function (tweet) {
-        html += `
+//   const interval = setInterval(function () {
+    fetch(url)
+      // returns json response
+      // somehow already knows how to pull 10 tweets
+      .then(function (response) {
+        return response.json();
+      })
+      // returns data of the json
+      .then(function (data) {
+        let html = "";
+        data.statuses.forEach(function (tweet) {
+          html += `
             <div class="tweet">
           <img
             src="${tweet.user.profile_image_url}"
@@ -44,7 +46,8 @@ function loadJSON() {
           </div>
         </div>
           `;
+        });
+        document.getElementById("tweets").innerHTML = html;
       });
-      document.getElementById("tweets").innerHTML = html;
-    });
+//   }, 5000);
 }
