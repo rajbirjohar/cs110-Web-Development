@@ -1,3 +1,8 @@
+// TODO:
+// Fix profile picture not displaying correctly
+// Search bar
+// Remove duplicates
+
 const url =
   "http://twitterfeedserverrails-env.eba-xmqy8ybh.us-east-1.elasticbeanstalk.com/feed/random?q=weather";
 
@@ -27,7 +32,7 @@ function loadJSON() {
         html += `
             <div class="tweet">
           <img
-            src=${tweet.user.profile_image_url_https}"
+            src="${tweet.user.profile_image_url}"
             alt="Profile Picture"
             class="profile-picture"
           />
