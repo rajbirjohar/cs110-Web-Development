@@ -112,6 +112,20 @@ body {
   border: 2px solid #8a8380;
 }
 
+.mode {
+  cursor: pointer;
+  color: #faeae1;
+  background-color: #5c5956;
+  padding: 10px 20px;
+  border-radius: 7px;
+  transition: background-color 200ms ease-in-out;
+}
+
+.mode:hover {
+  background-color: #8a8380;
+}
+
+
 .grid {
   background: #5c5956;
   display: grid;
