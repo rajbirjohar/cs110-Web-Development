@@ -32,7 +32,7 @@ nav ul li {
   cursor: pointer;
 }
 
-nav ul li:hover{
+nav ul li:hover {
   color: #1da1f2;
   border-bottom: 2px solid #1da1f2;
 }
@@ -97,6 +97,35 @@ main section {
 }
 .numbers span {
   color: #1da1f2;
+}
+.json-wrapper {
+  display: flex;
+  padding: 10px;
+}
+#button1,
+#button2 {
+  border: none;
+  box-shadow: none;
+  background-color: #1da1f2;
+  color: #fff;
+  font-weight: bold;
+  font-size: large;
+  border-radius: 25px;
+  padding: 5px 15px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.search-bar {
+  width: 70%;
+  padding-left: 1rem;
+  margin-right: 10px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  border: 2px solid #aaa;
+  border-radius: 2px;
+  border-radius: 25px;
 }
 .tweets {
   min-width: 600px;

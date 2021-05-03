@@ -25,13 +25,11 @@ document.getElementById("button1").addEventListener("click", loadJSON);
 // button to pause fetching
 document.getElementById("button2").addEventListener("click", toggleFetch);
 
-
 // Start loading JSON data
 function loadJSON() {
-  
-    const interval = setInterval(function () {
-      if(togAutoF){
-        fetch(url)
+  const interval = setInterval(function () {
+    if (togAutoF) {
+      fetch(url)
         // returns json response
         // somehow already knows how to pull 10 tweets
         .then(function (response) {
@@ -49,9 +47,8 @@ function loadJSON() {
           // sorting tweets by date
           // uniqueTweets.statuses.forEach(function (tweet) {
           //   tempEntry = {tweet : tweet.created_at}
-            
-          // });
 
+          // });
 
           // adding tweets
           uniqueTweets.forEach(function (tweet) {
@@ -73,17 +70,36 @@ function loadJSON() {
             </div>
             `;
           });
-          
+
           document.getElementById("tweets").innerHTML = html;
         });
-      }
-    }, 5000);
+    }
+  }, 5000);
 }
 
 // pause/play loading JSON data
 
 function toggleFetch() {
-
   togAutoF = !togAutoF;
   console.log(togAutoF);
+  if (!togAutoF) {
+    document.getElementById("button2").innerHTML = "Resume Tweets";
+  } else {
+    document.getElementById("button2").innerHTML = "Pause Tweets";
+  }
+}
+
+const searchBar = document.getElementById("search-bar");
+
+function searchTweets() {
+  let input = document.getElementById("search-bar").value;
+  input = input.toLowerCase();
+  let x = document.getElementsByClassName("tweet");
+  for (i = 0; i < x.length; i++) {
+    if (!x[i].innerHTML.toLowerCase().includes(input)) {
+      x[i].style.display = "none";
+    } else {
+      x[i].style.display = "block";
+    }
+  }
 }
