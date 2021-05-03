@@ -116,6 +116,18 @@ main section {
   cursor: pointer;
   margin-right: 10px;
 }
+#button1:hover,
+#button2:hover {
+  background-color: #1c8cd1;
+}
+#button1:active,
+#button2:active {
+  background-color: #197cb9;
+}
+.disabled{
+  background-color: gray !important;
+  cursor: default !important;
+}
 .search-bar {
   padding-left: 1rem;
   margin-right: 10px;

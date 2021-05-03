@@ -28,6 +28,7 @@ function toggleFetch() {
 
 function loadJSON() {
   document.getElementById("intro-text").innerHTML = "Loading...";
+  button1.classList.add("disabled");
   const interval = setInterval(function () {
     if (togAutoF) {
       fetch(url)
