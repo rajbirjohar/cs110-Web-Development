@@ -5,10 +5,11 @@
 
 // global vars
 let togAutoF = true;
-
+var uniqueTweets = new Set();
+var sortedTweets = {};
 
 const url =
-  "http://twitterfeedserverrails-env.eba-xmqy8ybh.us-east-1.elasticbeanstalk.com/feed/random?q=weather";
+  "http://ec2-54-219-224-129.us-west-1.compute.amazonaws.com:2000/feed/random?q=weather";
 
 // fetch template
 fetch(url)
@@ -39,14 +40,30 @@ function loadJSON() {
         // returns data of the json
         .then(function (data) {
           let html = "";
+
+          // remove dupes
           data.statuses.forEach(function (tweet) {
+            uniqueTweets.add(tweet);
+          });
+
+          // sorting tweets by date
+          // uniqueTweets.statuses.forEach(function (tweet) {
+          //   tempEntry = {tweet : tweet.created_at}
+            
+          // });
+
+
+          // adding tweets
+          uniqueTweets.forEach(function (tweet) {
             html += `
             <div class="tweet">
-              <img
-                src="${tweet.user.profile_image_url}"
-                alt="Profile Picture"
-                class="profile-picture"
-              />
+              <object data="${tweet.user.profile_image_url}" type="image/png" class="profile-picture">
+                <img
+                  src="images/ratatouille.jpg"
+                  alt="Profile Picture"
+                  class="profile-picture"
+                />
+              </object>
               <div>
                 <p><strong>${tweet.user.screen_name} </strong><span>${tweet.created_at}</span></p>
                 <caption>
@@ -56,6 +73,7 @@ function loadJSON() {
             </div>
             `;
           });
+          
           document.getElementById("tweets").innerHTML = html;
         });
       }
