@@ -1,55 +1,50 @@
 // TODO:
-// Fix profile picture not displaying correctly
-// Search bar
-// Remove duplicates
+// Date ordering
 
 // global vars
 let togAutoF = true;
 var uniqueTweets = new Set();
 var sortedTweets = {};
+const button1 = document.getElementById("button1");
+const button2 = document.getElementById("button2");
+const searchBar = document.getElementById("search-bar");
 
 const url =
   "http://ec2-54-219-224-129.us-west-1.compute.amazonaws.com:2000/feed/random?q=weather";
 
-// fetch template
-fetch(url)
-  .then((res) => res.json())
-  // do something with data
-  .catch((err) => {
-    // error catching
-    console.log(err);
-  });
+// pause/play loading JSON data
 
-// button to fetch data
-document.getElementById("button1").addEventListener("click", loadJSON);
-// button to pause fetching
-document.getElementById("button2").addEventListener("click", toggleFetch);
+function toggleFetch() {
+  togAutoF = !togAutoF;
+  console.log(togAutoF);
+  if (!togAutoF) {
+    document.getElementById("button2").innerHTML = "Resume Tweets";
+  } else {
+    document.getElementById("button2").innerHTML = "Pause Tweets";
+  }
+}
 
 // Start loading JSON data
+
 function loadJSON() {
   const interval = setInterval(function () {
     if (togAutoF) {
       fetch(url)
         // returns json response
-        // somehow already knows how to pull 10 tweets
         .then(function (response) {
           return response.json();
         })
         // returns data of the json
         .then(function (data) {
           let html = "";
-
           // remove dupes
           data.statuses.forEach(function (tweet) {
             uniqueTweets.add(tweet);
           });
-
           // sorting tweets by date
           // uniqueTweets.statuses.forEach(function (tweet) {
           //   tempEntry = {tweet : tweet.created_at}
-
           // });
-
           // adding tweets
           uniqueTweets.forEach(function (tweet) {
             html += `
@@ -77,29 +72,26 @@ function loadJSON() {
   }, 5000);
 }
 
-// pause/play loading JSON data
-
-function toggleFetch() {
-  togAutoF = !togAutoF;
-  console.log(togAutoF);
-  if (!togAutoF) {
-    document.getElementById("button2").innerHTML = "Resume Tweets";
-  } else {
-    document.getElementById("button2").innerHTML = "Pause Tweets";
-  }
-}
-
-const searchBar = document.getElementById("search-bar");
+// Search bar functionality. Case insensitive.
 
 function searchTweets() {
-  let input = document.getElementById("search-bar").value;
+  let input = searchBar.value;
   input = input.toLowerCase();
-  let x = document.getElementsByClassName("tweet");
-  for (i = 0; i < x.length; i++) {
-    if (!x[i].innerHTML.toLowerCase().includes(input)) {
-      x[i].style.display = "none";
+  let result = document.getElementsByClassName("tweet");
+  for (i = 0; i < result.length; i++) {
+    if (!result[i].innerHTML.toLowerCase().includes(input)) {
+      result[i].style.display = "none";
     } else {
-      x[i].style.display = "block";
+      result[i].style.display = "flex";
     }
   }
 }
+
+// fetch template
+fetch(url)
+  .then((res) => res.json())
+  // do something with data
+  .catch((err) => {
+    // error catching
+    console.log(err);
+  });
