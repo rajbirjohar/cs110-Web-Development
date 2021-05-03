@@ -27,6 +27,7 @@ function toggleFetch() {
 // Start loading JSON data
 
 function loadJSON() {
+  document.getElementById("intro-text").innerHTML = "Loading...";
   const interval = setInterval(function () {
     if (togAutoF) {
       fetch(url)
