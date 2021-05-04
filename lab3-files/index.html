@@ -12,8 +12,19 @@
         <li>Messages</li>
       </ul>
       <img src="images/twitter-logo.png" alt="Twitter Logo" class="logo" />
-     
-      <button>Tweet</button>
+      <div class="json-wrapper">
+        <input
+          type="text"
+          id="search-bar"
+          class="search-bar"
+          placeholder="Search Tweets"
+          onkeyup="searchTweets()"
+        />
+        <button id="button1" onclick="loadJSON(); this.disabled = true">
+          Load Tweets
+        </button>
+        <button id="button2" onclick="toggleFetch()">Pause Tweets</button>
+      </div>
     </nav>
     <main>
       <section class="profile">
@@ -40,77 +51,11 @@
           <p>Followers<br /><span>809</span></p>
         </div>
       </section>
-        <button id="button1">Load JSON</button>
-        <button id="button2">Pause JSON</button>
-        <section id="tweets" class="tweets">
-          <!-- <div class="tweet">
-          <img
-            src="images/ratatouille.jpg"
-            alt="Profile Picture"
-            class="profile-picture"
-          />
-          <div>
-            <p><strong>Remy </strong><span>@remy Nov 19</span></p>
-            <caption>
-              I'm taking this class called CS 110 and the TAs are all so
-              <strong>cool!</strong>
-            </caption>
-          </div>
-        </div>
-        <div class="tweet">
-          <img
-            src="images/ratatouille.jpg"
-            alt="Profile Picture"
-            class="profile-picture"
-          />
-          <div>
-            <p><strong>Remy </strong><span>@remy Nov 19</span></p>
-            <caption>
-              It's 2007. You just got home from elementary school. Your mom has
-              pizza bagels in the oven. Ratatouille is in theatres. Life is good
-            </caption>
-          </div>
-        </div>
-        <div class="tweet">
-          <img
-            src="images/ratatouille.jpg"
-            alt="Profile Picture"
-            class="profile-picture"
-          />
-          <div>
-            <p><strong>Remy </strong><span>@remy Nov 19</span></p>
-            <caption>
-              Let's make some pasta!
-            </caption>
-          </div>
-        </div>
-        <div class="tweet">
-          <img
-            src="images/ratatouille.jpg"
-            alt="Profile Picture"
-            class="profile-picture"
-          />
-          <div>
-            <p><strong>Remy </strong><span>@remy Nov 19</span></p>
-            <caption>
-              Let's make some pasta!
-            </caption>
-          </div>
-        </div>
-        <div class="tweet">
-          <img
-            src="images/ratatouille.jpg"
-            alt="Profile Picture"
-            class="profile-picture"
-          />
-          <div>
-            <p><strong>Remy </strong><span>@remy Nov 19</span></p>
-            <caption>
-              Let's make some pasta!
-            </caption>
-          </div>
-        </div> -->
-        </section>
+      <section id="tweets" class="tweets">
+        <h3 id="intro-text">
+          Click the "Load Tweets" Button above to generate the tweets.
+        </h3>
+      </section>
       <section class="follow">
         <h1>Who to follow</h1>
         <div class="follower">
