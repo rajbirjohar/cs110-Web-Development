@@ -8,6 +8,7 @@ var sortedTweets = {};
 const button1 = document.getElementById("button1");
 const button2 = document.getElementById("button2");
 const searchBar = document.getElementById("search-bar");
+const loading = document.getElementById("intro-text");
 
 const url =
   "http://ec2-54-219-224-129.us-west-1.compute.amazonaws.com:2000/feed/random?q=weather";
@@ -18,16 +19,16 @@ function toggleFetch() {
   togAutoF = !togAutoF;
   console.log(togAutoF);
   if (!togAutoF) {
-    document.getElementById("button2").innerHTML = "Resume Tweets";
+    button2.innerHTML = "Resume Tweets";
   } else {
-    document.getElementById("button2").innerHTML = "Pause Tweets";
+    button2.innerHTML = "Pause Tweets";
   }
 }
 
 // Start loading JSON data
 
 function loadJSON() {
-  document.getElementById("intro-text").innerHTML = "Loading...";
+  loading.innerHTML = "Loading...";
   button1.classList.add("disabled");
   const interval = setInterval(function () {
     if (togAutoF) {

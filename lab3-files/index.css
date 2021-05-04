@@ -124,7 +124,7 @@ main section {
 #button2:active {
   background-color: #197cb9;
 }
-.disabled{
+.disabled {
   background-color: gray !important;
   cursor: default !important;
 }
