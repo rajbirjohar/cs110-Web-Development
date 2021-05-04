@@ -5,6 +5,7 @@
 let togAutoF = true;
 var uniqueTweets = new Set();
 var sortedTweets = {};
+var date;
 const button1 = document.getElementById("button1");
 const button2 = document.getElementById("button2");
 const searchBar = document.getElementById("search-bar");
@@ -42,14 +43,18 @@ function loadJSON() {
           let html = "";
           // remove dupes
           data.statuses.forEach(function (tweet) {
-            uniqueTweets.add(tweet);
+            if (!uniqueTweets.has(tweet)) {
+              uniqueTweets.add(tweet);
+            }
           });
           // sorting tweets by date
-          // uniqueTweets.statuses.forEach(function (tweet) {
-          //   tempEntry = {tweet : tweet.created_at}
-          // });
+          sortedTweets = Array.from(uniqueTweets).sort(function(a, b) {
+              return (a.created_at < b.created_at) ? -1 : ((a.created_at > b.created_at) ? 1 : 0);
+          });
+          console.log(sortedTweets);
           // adding tweets
-          uniqueTweets.forEach(function (tweet) {
+          sortedTweets.forEach(function (tweet) {
+            date = new Date(tweet.created_at).toString().slice(0, 24);
             html += `
             <div class="tweet">
               <object data="${tweet.user.profile_image_url}" type="image/png" class="profile-picture">
@@ -60,7 +65,7 @@ function loadJSON() {
                 />
               </object>
               <div>
-                <p><strong>${tweet.user.screen_name} </strong><span>${tweet.created_at}</span></p>
+                <p><strong>${tweet.user.screen_name} </strong><span>${date}</span></p>
                 <caption>
                 ${tweet.text}
                 </caption>
