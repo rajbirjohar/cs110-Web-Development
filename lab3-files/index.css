@@ -7,11 +7,13 @@ body {
 }
 
 nav {
-  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 nav ul {
@@ -51,7 +53,9 @@ nav button {
   padding: 5px 15px;
   text-decoration: none;
 }
-
+.skip-link{
+  display: none;
+}
 main {
   display: flex;
   justify-content: center;
