@@ -1,6 +1,3 @@
-// TODO:
-// Date ordering
-
 // global vars
 let togAutoF = true;
 var uniqueTweets = new Set();
