@@ -14,9 +14,15 @@ const loading = document.getElementById("intro-text");
 const url =
   "http://ec2-54-219-224-129.us-west-1.compute.amazonaws.com:2000/feed/random?q=weather";
 
-// pause/play loading JSON data
 
+/**
+ * Returns value of togAutoF
+ * @param {boolean} togAutoF
+ * @param {innerHTML} button2
+ * @returns {boolean} toggles play/pause of getting JSON data
+ */
 function toggleFetch() {
+  // pause/play loading JSON data
   togAutoF = !togAutoF;
   console.log(togAutoF);
   if (!togAutoF) {
@@ -26,11 +32,20 @@ function toggleFetch() {
   }
 }
 
-// Start loading JSON data
-
+/**
+ * Returns html string 
+ * @param {innerHTML} Loading
+ * @param {classList} button1
+ * @param {boolean} togAutoF
+ * @param {JSON} data
+ * @param {set} uniqueTweets
+ * @param {dictionary} sortedTweets
+ * @returns {string} returns html string to be displayed
+ */
 function loadJSON() {
   loading.innerHTML = "Loading...";
   button1.classList.add("disabled");
+  // Start loading JSON data
   const interval = setInterval(function () {
     if (togAutoF) {
       fetch(url)
@@ -80,12 +95,18 @@ function loadJSON() {
   }, 5000);
 }
 
-// Search bar functionality. Case insensitive.
 
+/**
+ * Returns array of tweets named result
+ * @param {string} searchBar.value
+ * @param {innerHTML} document.getElementsByClassName("tweet")
+ * @return {array} displays tweets that match case insensitively with input values
+ */
 function searchTweets() {
   let input = searchBar.value;
   input = input.toLowerCase();
   let result = document.getElementsByClassName("tweet");
+  // Search bar functionality. 
   for (i = 0; i < result.length; i++) {
     if (!result[i].innerHTML.toLowerCase().includes(input)) {
       result[i].style.display = "none";
@@ -95,7 +116,7 @@ function searchTweets() {
   }
 }
 
-// fetch template
+// provided fetch template
 fetch(url)
   .then((res) => res.json())
   // do something with data
