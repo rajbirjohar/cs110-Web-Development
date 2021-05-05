@@ -49,7 +49,7 @@ function loadJSON() {
           });
           // sorting tweets by date
           sortedTweets = Array.from(uniqueTweets).sort(function(a, b) {
-              return (a.created_at < b.created_at) ? -1 : ((a.created_at > b.created_at) ? 1 : 0);
+              return (a.created_at < b.created_at) ? 1 : ((a.created_at > b.created_at) ? -1 : 0);
           });
           console.log(sortedTweets);
           // adding tweets
