@@ -1,8 +1,6 @@
 // Controller handler to handle functionality in room page
 
 const config = require("config");
-const url = config.get("mongoURI");
-
 const roomGenerator = require("../util/roomIdGenerator.js");
 
 var roomInfo;
@@ -20,24 +18,26 @@ function getRoom(request, response) {
 
 function postRoom() {
   console.log(roomInfo);
-  if (roomInfo.roomName != "") {
+  if (roomInfo.roomName != "favicon.ico") {
     const MongoClient = require("mongodb");
     var chat_room;
 
     // Server path
+    const url = config.get("mongoURI");
+
     MongoClient.connect(url, (err, client) => {
       const db = client.db("myFirstDatabase");
 
       if (!err) {
         chat_room = db.collection("chat_room");
-        var messageArray = [];
+        var msgArray = [];
 
         chat_room.insertMany(
           [
             {
               name: roomInfo.roomName,
               id: roomInfo.newRoomId,
-              messages: messageArray,
+              messages: msgArray,
             },
           ],
           (err, results) => {}
