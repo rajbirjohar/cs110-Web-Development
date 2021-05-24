@@ -1,2 +1,30 @@
-<h1> Home </h1>
-<p>This is the {{ title }} page</p>
+<main class="home">
+  <form class="roomForm" action="/create" method="POST">
+    <div class="formWrapper">
+      <label class="inputTitle">Room Name</label>
+      <div class="inputWrapper">
+        <input
+          type="nickname"
+          id="nickname"
+          name="nickname"
+          class="formInput"
+          required
+        />
+        <button type="submit" class="mainButton">Create room</button>
+      </div>
+    </div>
+  </form>
+
+  {{#each chatlist}}
+    <div class="roomList">
+      <p class="roomName">{{name}}</p>
+      <p class="roomID">{{id}}</p>
+      <a href="/room?id={{id}}" method="GET" class="secondButton">Join Room</a>
+    </div>
+  {{/each}}
+</main>
+
+<script>
+  window.onload = clearCreateBar; function clearCreateBar() {
+  document.getElementById("nickname").value = ""; }
+</script>

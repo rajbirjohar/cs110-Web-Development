@@ -1,6 +1,147 @@
-<h1> Room </h1>
-<p>This is a demo of chatroom page</p>
-<p>
-    The room you are visiting is {{ roomName }}
-</p>
-<p>To generate a new room, here is the room id: {{ newRoomId }}</p>
+<head>
+    <link rel="stylesheet" href="/public/css/style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body onload="getMsg();">
+    <script>
+        var prevMsgSize = 0;
+
+        function getMsg() {
+            var cid = document.getElementById("chat-id").innerHTML;
+
+            $.ajax({
+                url: '/getMsg',
+                method: 'get',
+                dataType: 'json',
+                data: {
+                    id: cid
+                },
+                success: function (response) {
+                    if (response.msg == 'success') {
+                        console.log("GET INFO");
+                        console.log(response);
+                        for (var i = 0; i < response.data[0].messages.length; i++) {
+                            if (prevMsgSize < response.data[0].messages.length) {
+                                for (var j = prevMsgSize; j < response.data[0].messages.length; j++) {
+                                    prevMsgSize = response.data[0].messages.length;
+                                    appendMessage(response.data[0].messages[j].name, response.data[0].messages[j].time, "left", response.data[0].messages[j].text);
+                                }
+                            }
+                            else {
+                                prevMsgSize = response.data[0].messages.length;
+                            }
+                        }
+                    }
+                },
+                error: function (response) {
+                    alert('server error');
+                }
+            });
+        }
+
+        function appendMessage(name, time, side, text) {
+            const chatBox = get(".chat-box");
+            const msgHTML = `
+                <div class="text-box">
+                <div class="message">
+                    <div class="senderWrapper">
+                    <p class="userName">${name}
+                    <span class="time">${time}</span>
+                    </p>
+                    </div>
+                    <p class="text">${text}</p>
+                </div>
+                </div>
+             `;
+  //testing
+            chatBox.insertAdjacentHTML("beforeend", msgHTML);
+            chatBox.scrollTop += 500;
+        }
+
+        function get(selector, root = document) {
+            return root.querySelector(selector);
+        }
+        var timer = setInterval(getMsg, 500);
+    </script>
+    <main>
+    <h1 class="roomTitle">Room name: {{ roomName }}</h1>
+    <div id="chatinfo">
+        <h3>Room ID: <span id="chat-id">{{newRoomId}}</h3></span>
+    </div>
+    <section>
+        <div class="chat-box">
+            <div class="text-box"></div>
+        </div>
+        <form class="input-container" onsubmit="sendMsg(); return false">
+            <div class="inputWrapper">
+                <input type="text" class="input formInput" placeholder="Enter Message" onclick="namePrompt(); return false">
+                <button type="submit" class="mainButton">Send</button>
+            </div>
+        </form>
+        <script>
+            var p;
+            var isName = false;
+            function namePrompt() {
+                if (isName == false) {
+                    p = prompt("Enter a nickname");
+                    if (p.length != 0) {
+                        isName = true;
+                        myvar = p;
+                        var tag = document.createElement("h3");
+                        var text = document.createTextNode("Nickname: " + p);
+                        tag.appendChild(text);
+                        var element = document.getElementById("chatinfo");
+                        element.appendChild(tag);
+                        document.body.removeEventListener('click', namePrompt);
+                    }else {isName = false;}
+                }
+            }
+            function sendMsg() {
+                const msgerInput = get(".input");
+                var cid = document.getElementById("chat-id").innerHTML;
+                var n_name = p;
+
+                //create a get ajax, grab the messages stored, and loop through each  msg and append
+                const msgText = msgerInput.value;
+                if (!msgText) return;
+
+                $.ajax({
+                    dataType: 'json',
+                    data: {
+                        name: n_name,
+                        chatid: cid,
+                        text: msgText,
+                        time: formatDate(new Date())
+                    },
+                    type: 'POST',
+                    url: "/insertText",
+                });
+
+                msgerInput.value = "";
+
+                function get(selector, root = document) {
+                    return root.querySelector(selector);
+                }
+                function formatDate(date) {
+                    var h = date.getHours();
+                    var m = date.getMinutes();
+                    var ampm = h >= 12 ? 'pm' : 'am';
+                    h = h % 12;
+                    h = h ? h : 12;
+                    m = m < 10 ? '0' + m : m;
+                    var time = h + ':' + m + ' ' + ampm;
+                    return time;
+                }
+            }
+        </script>
+    </section>
+    </main>
+</body>
