@@ -50,8 +50,6 @@ app.post("/create", (req, res) => {
 });
 
 app.get("/room", (req, res) => {
-  //make a query that selects the name/id from the database
-  //render it to room as object
   chat_room.find({ id: req.query.id }).toArray(function (err, result) {
     if (err) throw err;
     console.log(result);
@@ -61,7 +59,6 @@ app.get("/room", (req, res) => {
 
 app.post("/insertText", (req, res) => {
   console.log(req.body);
-  //find room id, then insert message from input into database
   chat_room.updateOne(
     { id: req.body.chatid },
     {
