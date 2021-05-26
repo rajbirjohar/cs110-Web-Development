@@ -1,12 +1,8 @@
-# Assignment4 Concentrator
+## Lab 4 - Chat Room Lab
 
-## Project Description
-<!-- you can include known bugs, design decisions, external references used... -->
+> Authors: Rajbir Johar, Matthew Lee
 
-## Ethics Questions
+### To Run
 
-### Question 1
-
-> Give two possible chatroom moderation features and the reasons that you should implement each one
-
-<!-- Put your answer to question 1 here -->
+1. Clone
+2. Enter directory lab4-files/
