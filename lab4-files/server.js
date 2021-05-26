@@ -46,7 +46,7 @@ app.set("view engine", "hbs");
 
 // TODO: Add server side code
 app.post("/create", (req, res) => {
-  res.redirect(req.body.nickname);
+  res.redirect(req.body.roomname);
 });
 
 app.get("/room", (req, res) => {

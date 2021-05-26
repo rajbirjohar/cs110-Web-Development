@@ -4,9 +4,9 @@
       <label class="inputTitle">Room Name</label>
       <div class="inputWrapper">
         <input
-          type="nickname"
-          id="nickname"
-          name="nickname"
+          type="roomname"
+          id="roomname"
+          name="roomname"
           class="formInput"
           required
         />
@@ -25,8 +25,8 @@
 </main>
 
 <script>
-  window.onload = clearCreateBar; function clearCreateBar() {
-    document.getElementById("nickname").value = ""; 
+  window.onload = clearSearch; function clearSearch() {
+    document.getElementById("roomname").value = ""; 
   }
   
   // source: https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
