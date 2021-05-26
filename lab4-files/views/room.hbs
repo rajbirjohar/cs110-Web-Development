@@ -18,7 +18,7 @@
         var prevMsgSize = 0;
 
         function getMsg() {
-            var cid = document.getElementById("chat-id").innerHTML;
+            var cid = document.getElementById("chatId").innerHTML;
 
             $.ajax({
                 url: '/getMsg',
@@ -45,15 +45,15 @@
                     }
                 },
                 error: function (response) {
-                    alert('server error');
+                    console.log('server error');
                 }
             });
         }
 
         function appendMessage(name, time, side, text) {
-            const chatBox = get(".chat-box");
+            const chatBox = get(".chatBox");
             const msgHTML = `
-                <div class="text-box">
+                <div class="textBox">
                 <div class="message">
                     <div class="senderWrapper">
                     <p class="userName">${name}
@@ -77,11 +77,11 @@
     <main>
     <h1 class="roomTitle">Room name: {{ roomName }}</h1>
     <div id="chatinfo">
-        <h3>Room ID: <span id="chat-id">{{newRoomId}}</h3></span>
+        <h3>Room ID: <span id="chatId">{{newRoomId}}</h3></span>
     </div>
     <section>
-        <div class="chat-box">
-            <div class="text-box"></div>
+        <div class="chatBox">
+            <div class="textBox"></div>
         </div>
         <form class="input-container" onsubmit="sendMsg(); return false">
             <div class="inputWrapper">
@@ -109,7 +109,7 @@
             }
             function sendMsg() {
                 const msgerInput = get(".input");
-                var cid = document.getElementById("chat-id").innerHTML;
+                var cid = document.getElementById("chatId").innerHTML;
                 var n_name = p;
 
                 //create a get ajax, grab the messages stored, and loop through each  msg and append
