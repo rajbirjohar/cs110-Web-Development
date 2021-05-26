@@ -29,14 +29,14 @@ function postRoom() {
 
     if (!err) {
       chat_room = db.collection("chat_room");
-      var msgArray = [];
+      var messageArray = [];
 
       chat_room.insertMany(
         [
           {
             name: roomInfo.roomName,
             id: roomInfo.newRoomId,
-            messages: msgArray,
+            messages: messageArray,
           },
         ],
         (err, results) => {}

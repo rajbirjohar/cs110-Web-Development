@@ -1,21 +1,18 @@
-// import dependencies
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const hbs = require("express-handlebars");
 const path = require("path");
-// Module calling
 const MongoClient = require("mongodb");
-var chat_room;
-
-// Server path
 const config = require("config");
 const url = config.get("mongoURI");
+
+var chat_room;
 
 MongoClient.connect(url, (err, client) => {
   const db = client.db("myFirstDatabase");
 
   if (!err) {
-    console.log("successful connection with the server");
+    console.log("Connected to Database.");
     chat_room = db.collection("chat_room");
   } else console.log("Error connecting to Database.");
 });
@@ -80,7 +77,7 @@ app.post("/insertText", (req, res) => {
   );
 });
 
-app.get("/getMsg", (req, res) => {
+app.get("/getMessage", (req, res) => {
   chat_room.find({ id: req.query.id }).toArray(function (err, result) {
     if (err) throw err;
     res.json({ msg: "success", data: result });

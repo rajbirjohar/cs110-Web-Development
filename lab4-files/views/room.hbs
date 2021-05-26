@@ -13,15 +13,15 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
-<body onload="getMsg();">
+<body onload="getMessage();">
     <script>
         var messageSize = 0;
 
-        function getMsg() {
+        function getMessage() {
             var chatId = document.getElementById("chatId").innerHTML;
 
             $.ajax({
-                url: '/getMsg',
+                url: '/getMessage',
                 method: 'get',
                 dataType: 'json',
                 data: {
@@ -34,7 +34,9 @@
                             if (messageSize < response.data[0].messages.length) {
                                 for (var j = messageSize; j < response.data[0].messages.length; j++) {
                                     messageSize = response.data[0].messages.length;
-                                    appendMessage(response.data[0].messages[j].name, response.data[0].messages[j].time, "left", response.data[0].messages[j].text);
+                                    appendMessage(response.data[0].messages[j].name,
+                                    response.data[0].messages[j].time, "left", 
+                                    response.data[0].messages[j].text);
                                 }
                             } else {messageSize = response.data[0].messages.length;}
                         }
@@ -65,7 +67,7 @@
         function get(selector, root = document) {
             return root.querySelector(selector);
         }
-        var timer = setInterval(getMsg, 500);
+        var timer = setInterval(getMessage, 500);
     </script>
     <main>
     <h1 class="roomTitle">Room name: {{ roomName }}</h1>
