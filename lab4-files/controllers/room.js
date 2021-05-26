@@ -18,33 +18,31 @@ function getRoom(request, response) {
 
 function postRoom() {
   console.log(roomInfo);
-  if (roomInfo.roomName != "favicon.ico") {
-    const MongoClient = require("mongodb");
-    var chat_room;
+  const MongoClient = require("mongodb");
+  var chat_room;
 
-    // Server path
-    const url = config.get("mongoURI");
+  // Server path
+  const url = config.get("mongoURI");
 
-    MongoClient.connect(url, (err, client) => {
-      const db = client.db("myFirstDatabase");
+  MongoClient.connect(url, (err, client) => {
+    const db = client.db("myFirstDatabase");
 
-      if (!err) {
-        chat_room = db.collection("chat_room");
-        var msgArray = [];
+    if (!err) {
+      chat_room = db.collection("chat_room");
+      var msgArray = [];
 
-        chat_room.insertMany(
-          [
-            {
-              name: roomInfo.roomName,
-              id: roomInfo.newRoomId,
-              messages: msgArray,
-            },
-          ],
-          (err, results) => {}
-        );
-      } else console.log("Error connecting to Database.");
-    });
-  }
+      chat_room.insertMany(
+        [
+          {
+            name: roomInfo.roomName,
+            id: roomInfo.newRoomId,
+            messages: msgArray,
+          },
+        ],
+        (err, results) => {}
+      );
+    } else console.log("Error connecting to Database.");
+  });
 }
 
 function handleMessageRequest(req, res) {
