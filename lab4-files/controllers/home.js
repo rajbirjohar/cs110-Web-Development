@@ -7,7 +7,6 @@ const url = config.get("mongoURI");
 const MongoClient = require("mongodb");
 var chat_room;
 
-// Server path
 function getHome(request, response) {
   MongoClient.connect(url, (err, client) => {
     const db = client.db("myFirstDatabase");

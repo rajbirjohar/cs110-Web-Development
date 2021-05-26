@@ -1,6 +1,6 @@
 // Controller handler to handle functionality in room page
-
 const config = require("config");
+const url = config.get("mongoURI");
 const roomGenerator = require("../util/roomIdGenerator.js");
 
 var roomInfo;
@@ -20,9 +20,6 @@ function postRoom() {
   console.log(roomInfo);
   const MongoClient = require("mongodb");
   var chat_room;
-
-  // Server path
-  const url = config.get("mongoURI");
 
   MongoClient.connect(url, (err, client) => {
     const db = client.db("myFirstDatabase");
