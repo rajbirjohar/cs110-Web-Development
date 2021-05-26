@@ -1,0 +1,144 @@
+<head>
+    <link rel="stylesheet" href="/public/css/style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="icon" href="data:,">
+    <link rel="icon" href="data:;base64,=">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body onload="getMessage();">
+    <script>
+        var messageSize = 0;
+
+        function getMessage() {
+            var chatId = document.getElementById("chatId").innerHTML;
+
+            $.ajax({
+                url: '/getMessage',
+                method: 'get',
+                dataType: 'json',
+                data: {
+                    id: chatId
+                },
+                success: function (response) {
+                    if (response.msg == 'success') {
+                        console.log(response);
+                        for (var i = 0; i < response.data[0].messages.length; i++) {
+                            if (messageSize < response.data[0].messages.length) {
+                                for (var j = messageSize; j < response.data[0].messages.length; j++) {
+                                    messageSize = response.data[0].messages.length;
+                                    appendMessage(response.data[0].messages[j].name,
+                                    response.data[0].messages[j].time, "left", 
+                                    response.data[0].messages[j].text);
+                                }
+                            } else {messageSize = response.data[0].messages.length;}
+                        }
+                    }
+                },
+                error: function (response) {
+                    console.log('server error');
+                }
+            });
+        }
+
+        function appendMessage(name, time, side, text) {
+            const chatBox = get(".chatBox");
+            const msgHTML = `
+                <div class="textBox">
+                <div class="message">
+                    <div class="senderWrapper">
+                    <p class="userName">${name} <span class="time">${time}</span></p>
+                    </div>
+                    <p class="text">${text}</p>
+                </div>
+                </div>
+             `;
+            chatBox.insertAdjacentHTML("beforeend", msgHTML);
+            chatBox.scrollTop += 500;
+        }
+
+        function get(selector, root = document) {
+            return root.querySelector(selector);
+        }
+        var timer = setInterval(getMessage, 500);
+    </script>
+    <main>
+    <h1 class="roomTitle">Room name: {{ roomName }}</h1>
+    <div id="chatinfo">
+        <h3>Room ID: <span id="chatId">{{newRoomId}}</h3></span>
+    </div>
+    <section>
+        <div class="chatBox">
+            <div class="textBox"></div>
+        </div>
+        <form onsubmit="sendMessage(); return false">
+            <div class="inputWrapper">
+                <input type="text" class="input formInput" placeholder="Enter Message" onclick="namePrompt(); return false">
+                <button type="submit" class="mainButton">Send</button>
+            </div>
+        </form>
+        <script>
+            var userName;
+            var enteredName = false;
+            function namePrompt() {
+                if (enteredName == false) {
+                    userName = prompt("Enter a username");
+                    if (userName.length != 0) {
+                        enteredName = true;
+                        // https://www.tutorialspoint.com/how-to-add-a-new-element-to-html-dom-in-javascript
+                        var tag = document.createElement("h3");
+                        var text = document.createTextNode("Username: " + userName);
+                        tag.appendChild(text);
+                        var element = document.getElementById("chatinfo");
+                        element.appendChild(tag);
+                        document.body.removeEventListener('click', namePrompt);
+                    }else {enteredName = false;}
+                }
+            }
+            function sendMessage() {
+                const inputValue = get(".input");
+                var chatId = document.getElementById("chatId").innerHTML;
+                var username = userName;
+                const messageContent = inputValue.value;
+                if (!messageContent) return;
+
+                $.ajax({
+                    dataType: 'json',
+                    data: {
+                        name: username,
+                        chatid: chatId,
+                        text: messageContent,
+                        time: formatDate(new Date())
+                    },
+                    type: 'POST',
+                    url: "/insertText",
+                });
+
+                inputValue.value = "";
+
+                function get(selector, root = document) {
+                    return root.querySelector(selector);
+                }
+                // https://stackoverflow.com/questions/8888491/how-do-you-display-javascript-datetime-in-12-hour-am-pm-format
+                function formatDate(date) {
+                    var h = date.getHours();
+                    var m = date.getMinutes();
+                    var ampm = h >= 12 ? 'pm' : 'am';
+                    h = h % 12;
+                    h = h ? h : 12;
+                    m = m < 10 ? '0' + m : m;
+                    var time = h + ':' + m + ' ' + ampm;
+                    return time;
+                }
+            }
+        </script>
+    </section>
+    </main>
+</body>

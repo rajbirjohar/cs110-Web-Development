@@ -1,0 +1,151 @@
+/* TODO: style each page */
+
+@import url("https://rsms.me/inter/inter.css");
+html {
+  font-family: "Inter", sans-serif;
+}
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: "Inter var", sans-serif;
+  }
+}
+html {
+  box-sizing: border-box;
+}
+html,
+body {
+  font-size: 16px;
+}
+
+main {
+  max-width: 800px;
+  margin: 6rem auto;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  margin: 6rem auto;
+  max-width: 800px;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.inputWrapper {
+  margin: 20px 0;
+  display: flex;
+}
+
+.inputTitle {
+  font-weight: 600;
+  font-size: 24px;
+}
+.formInput {
+  border: 2px solid lightgrey;
+  border-radius: 7px;
+  font-size: 16px;
+  margin-right: 10px;
+  padding: 0.5rem 1rem;
+  width: 80%;
+}
+.mainButton {
+  border: none;
+  padding: 10px 15px;
+  background-color: lightcoral;
+  color: #fff;
+  border-radius: 7px;
+  font-size: 16px;
+  width: 20%;
+}
+.roomList {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.roomName,
+.roomID,
+.joinRoom,
+.createRoom {
+  font-weight: 500;
+}
+.secondButton {
+  color: lightcoral;
+  text-decoration: none;
+  border: 2px solid lightcoral;
+  background-color: #fff;
+  padding: 8px 15px;
+  border-radius: 7px;
+}
+
+.message {
+  background-color: #fff;
+  border: 2px solid lightcoral;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  max-width: fit-content;
+}
+.senderWrapper {
+  display: flex;
+}
+.userName {
+  font-weight: 600;
+}
+.time {
+  color: gray;
+  font-weight: normal;
+}
+.text {
+  max-width: 400px;
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.roomTitle {
+  line-height: 1.5;
+}
+
+.messageWrapper {
+  margin: 20px 0;
+  display: flex;
+}
+
+@media only screen and (max-width: 868px) {
+  main,
+  .home {
+    min-width: 100%;
+    padding: 0 30px;
+  }
+  .inputWrapper {
+    flex-direction: column;
+  }
+  .formInput,
+  .mainButton {
+    width: 100%;
+    margin: 5px 0;
+  }
+  .text {
+    width: 100%;
+  }
+}
