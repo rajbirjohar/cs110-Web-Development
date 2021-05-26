@@ -15,32 +15,28 @@
 
 <body onload="getMsg();">
     <script>
-        var prevMsgSize = 0;
+        var messageSize = 0;
 
         function getMsg() {
-            var cid = document.getElementById("chatId").innerHTML;
+            var chatId = document.getElementById("chatId").innerHTML;
 
             $.ajax({
                 url: '/getMsg',
                 method: 'get',
                 dataType: 'json',
                 data: {
-                    id: cid
+                    id: chatId
                 },
                 success: function (response) {
                     if (response.msg == 'success') {
-                        console.log("GET INFO");
                         console.log(response);
                         for (var i = 0; i < response.data[0].messages.length; i++) {
-                            if (prevMsgSize < response.data[0].messages.length) {
-                                for (var j = prevMsgSize; j < response.data[0].messages.length; j++) {
-                                    prevMsgSize = response.data[0].messages.length;
+                            if (messageSize < response.data[0].messages.length) {
+                                for (var j = messageSize; j < response.data[0].messages.length; j++) {
+                                    messageSize = response.data[0].messages.length;
                                     appendMessage(response.data[0].messages[j].name, response.data[0].messages[j].time, "left", response.data[0].messages[j].text);
                                 }
-                            }
-                            else {
-                                prevMsgSize = response.data[0].messages.length;
-                            }
+                            } else {messageSize = response.data[0].messages.length;}
                         }
                     }
                 },
@@ -56,15 +52,12 @@
                 <div class="textBox">
                 <div class="message">
                     <div class="senderWrapper">
-                    <p class="userName">${name}
-                    <span class="time">${time}</span>
-                    </p>
+                    <p class="userName">${name} <span class="time">${time}</span></p>
                     </div>
                     <p class="text">${text}</p>
                 </div>
                 </div>
              `;
-  //testing
             chatBox.insertAdjacentHTML("beforeend", msgHTML);
             chatBox.scrollTop += 500;
         }
@@ -83,56 +76,55 @@
         <div class="chatBox">
             <div class="textBox"></div>
         </div>
-        <form onsubmit="sendMsg(); return false">
+        <form onsubmit="sendMessage(); return false">
             <div class="inputWrapper">
                 <input type="text" class="input formInput" placeholder="Enter Message" onclick="namePrompt(); return false">
                 <button type="submit" class="mainButton">Send</button>
             </div>
         </form>
         <script>
-            var p;
-            var isName = false;
+            var userName;
+            var enteredName = false;
             function namePrompt() {
-                if (isName == false) {
-                    p = prompt("Enter a nickname");
-                    if (p.length != 0) {
-                        isName = true;
-                        myvar = p;
+                if (enteredName == false) {
+                    userName = prompt("Enter a username");
+                    if (userName.length != 0) {
+                        enteredName = true;
+                        // https://www.tutorialspoint.com/how-to-add-a-new-element-to-html-dom-in-javascript
                         var tag = document.createElement("h3");
-                        var text = document.createTextNode("Nickname: " + p);
+                        var text = document.createTextNode("Nickname: " + userName);
                         tag.appendChild(text);
                         var element = document.getElementById("chatinfo");
                         element.appendChild(tag);
                         document.body.removeEventListener('click', namePrompt);
-                    }else {isName = false;}
+                    }else {enteredName = false;}
                 }
             }
-            function sendMsg() {
-                const msgerInput = get(".input");
-                var cid = document.getElementById("chatId").innerHTML;
-                var n_name = p;
-
-                //create a get ajax, grab the messages stored, and loop through each  msg and append
-                const msgText = msgerInput.value;
-                if (!msgText) return;
+            function sendMessage() {
+                const inputValue = get(".input");
+                var chatId = document.getElementById("chatId").innerHTML;
+                var username = userName;
+                const messageContent = inputValue.value;
+                if (!messageContent) return;
 
                 $.ajax({
                     dataType: 'json',
                     data: {
-                        name: n_name,
-                        chatid: cid,
-                        text: msgText,
+                        name: username,
+                        chatid: chatId,
+                        text: messageContent,
                         time: formatDate(new Date())
                     },
                     type: 'POST',
                     url: "/insertText",
                 });
 
-                msgerInput.value = "";
+                inputValue.value = "";
 
                 function get(selector, root = document) {
                     return root.querySelector(selector);
                 }
+                // https://stackoverflow.com/questions/8888491/how-do-you-display-javascript-datetime-in-12-hour-am-pm-format
                 function formatDate(date) {
                     var h = date.getHours();
                     var m = date.getMinutes();
